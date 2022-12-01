@@ -10,21 +10,17 @@ import { QueryFailedError } from 'typeorm';
 @Catch(QueryFailedError)
 export class QueryFailedErrorExceptionFilter implements ExceptionFilter {
   catch(exception: QueryFailedError, host: ArgumentsHost) {
-    const ctx = host.switchToHttp();
-    const response = ctx.getResponse<Response>();
+    const context = host.switchToHttp();
+    const response = context.getResponse<Response>();
     let message = '';
     let statusCode = HttpStatus.CONFLICT;
     let error = '';
 
     switch (exception.driverError.code) {
       case '23505':
-        if (exception.driverError.constraint === 'client_cli_email_Idx') {
-          message = 'Email is already registered';
-        } else if (
-          exception.driverError.constraint === 'client_cli_phone_Idx'
-        ) {
-          message = 'The telephone number is already registered';
-        }
+        message = this.getMessageForConstraint(
+          exception.driverError.constraint,
+        );
         statusCode = HttpStatus.CONFLICT;
         error = `Code: ${exception.driverError.code} - ${exception.driverError.detail} `;
         break;
@@ -38,5 +34,16 @@ export class QueryFailedErrorExceptionFilter implements ExceptionFilter {
     }
 
     response.status(statusCode).json({ statusCode, message, error });
+  }
+
+  private getMessageForConstraint(constraint: string): string {
+    switch (constraint) {
+      case 'client_cli_email_Idx':
+        return 'Email is already registered';
+      case 'client_cli_phone_Idx':
+        return 'The telephone number is already registered';
+      default:
+        return constraint + ' unclassified error';
+    }
   }
 }
