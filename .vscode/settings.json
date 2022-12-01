@@ -1,0 +1,13 @@
+{
+    "jest.autoRun": "off",
+    "cSpell.words": [
+        "datetime",
+        "expiracion",
+        "pkaccount",
+        "pkapp",
+        "pkclient",
+        "pkmovement",
+        "pktoken",
+        "postgresql"
+    ]
+}
