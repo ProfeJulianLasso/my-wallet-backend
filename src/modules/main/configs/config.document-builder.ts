@@ -12,12 +12,8 @@ export const configDocumentBuilder = new DocumentBuilder()
     'Client',
     'Description of the APIs corresponding to the client handling',
   )
-  .addTag(
-    'Security',
-    'Description of the APIs corresponding to the security management in the application.',
-  )
-  .addTag(
-    'Wallet',
-    'Description of the APIs corresponding to the wallet management.',
+  .addBearerAuth(
+    { in: 'header', type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+    'access-token',
   )
   .build();

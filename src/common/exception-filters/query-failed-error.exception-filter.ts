@@ -8,7 +8,9 @@ import { Response } from 'express';
 import { QueryFailedError } from 'typeorm';
 
 @Catch(QueryFailedError)
-export class QueryFailedErrorExceptionFilter implements ExceptionFilter {
+export class QueryFailedErrorExceptionFilter
+  implements ExceptionFilter<QueryFailedError>
+{
   catch(exception: QueryFailedError, host: ArgumentsHost) {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
@@ -22,7 +24,7 @@ export class QueryFailedErrorExceptionFilter implements ExceptionFilter {
           exception.driverError.constraint,
         );
         statusCode = HttpStatus.CONFLICT;
-        error = `Code: ${exception.driverError.code} - ${exception.driverError.detail} `;
+        error = `Code: ${exception.driverError.code} - ${exception.driverError.detail}`;
         break;
       default:
         message =

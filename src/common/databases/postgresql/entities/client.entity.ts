@@ -13,12 +13,17 @@ import { v4 as uuid } from 'uuid';
 import { AppEntity } from './app.entity';
 import { TokenEntity } from './token.entity';
 import { AccountEntity } from './account.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Index('client_cli_email_Idx', ['email'], { unique: true })
 @Index('pkclient', ['id'], { unique: true })
 @Index('client_cli_phone_Idx', ['phone'], { unique: true })
 @Entity('client', { schema: 'public' })
 export class ClientEntity {
+  @ApiProperty({
+    example: '123-123123-123-123123',
+    description: 'Identificación del cliente',
+  })
   @PrimaryGeneratedColumn('uuid', { name: 'cli_id' })
   id: string = uuid();
 

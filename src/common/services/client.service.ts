@@ -1,7 +1,7 @@
 // Libraries
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 
 // Entities
 import { ClientEntity } from '../databases/postgresql/entities/client.entity';

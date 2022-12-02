@@ -5,6 +5,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 // Configuration
 import { PipeValidator } from './modules/main/configs/pipe-validator.config';
 import { configDocumentBuilder } from './modules/main/configs/config.document-builder';
+import { optionsCreateDocument } from './modules/main/configs/options.create-document';
 
 // Modules
 import { MainModule } from './modules/main/main.module';
@@ -18,7 +19,11 @@ const bootstrap = async () => {
   SwaggerModule.setup(
     'docs/api',
     app,
-    SwaggerModule.createDocument(app, configDocumentBuilder),
+    SwaggerModule.createDocument(
+      app,
+      configDocumentBuilder,
+      optionsCreateDocument,
+    ),
   );
 
   await app.listen(3000);

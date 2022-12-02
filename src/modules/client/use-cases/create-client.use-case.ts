@@ -25,11 +25,11 @@ export class CreateClientUseCase {
     client.photo = dataClient.photo;
     client.app = new AppEntity();
     client.account = new AccountEntity();
-    client.tokens = new Array<TokenEntity>();
-    const token = new TokenEntity();
-    token.token = dataClient.token;
-    token.expirationDate = dataClient.tokenExpirationDate;
-    client.tokens.push(token);
+    // client.tokens = new Array<TokenEntity>();
+    // const token = new TokenEntity();
+    // token.token = dataClient.token;
+    // token.expirationDate = dataClient.tokenExpirationDate;
+    // client.tokens.push(token);
     await this.clientService.create(client);
     return { token: dataClient.token };
   }
